@@ -14,7 +14,7 @@ npm install react-bureaucrat
 | Name                        | Required  | Type     |  Default |  Usage  |
 | --------------------------- | :-------: | -------- |  ------- | ------- |  
 | id                          | [x]       | String   |  
-| onSubmit                    | [x]       | Function |          | Called on form submission, if no fields have errors. Receives the form's current state as its only argument* |
+| onSubmit                    | [x]       | Function |          | Called on form submission, if no fields have errors. Receives the form's current state as its only argument. Form state will be an object {"field-name-1": "value of field 1", "field-name-2", "value of field 2" ...} |
 | alwaysSubmit                |           | Boolean  |  false   | Forces onSubmit prop function to be called on form submission regardless of errors
 | onFailedSubmit              |           | Function |          | Called on form submission, if any fields have errors.
 | onPropogatedFailedSubmit    |           | Function |          | Called on form submission once for every field with errors.  Each call receives a field's name and current errors as its arguments.
@@ -52,7 +52,7 @@ npm install react-bureaucrat
 | --------------------------- | :-------: | -------- |  ------- | ------- |
 | defaultValue                |           |          |          | Gives the field a starting value
 | errors                      |           | Array    |  []      | Each element in the array must be an object with a _handle key and a message key.  The _handle key's value will be a function which takes as its argument the field's value.  If that function evaluates to true, the message key's value will be passed to the field's children.
-| name                        | [x]       | String   |          | Is the fields unique identifier.  It is used as a key in the form state*
+| name                        | [x]       | String   |          | Is the fields unique identifier.  It is used as a key in the form state
 | onFailedSubmit             |           | Function            | Called on form submission if the field has any current errors.  Receives those errors as it's argument.
 
 #### Children
@@ -73,8 +73,6 @@ npm install react-bureaucrat
     }
     </Field>
   ```
-
-* Form state will be {"field-name-1": "value of field 1", "field-name-2", "value of field 2" ...}
 
 ## Examples
 
