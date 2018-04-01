@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src -d lib",
     "build:watch": "babel src -w -d lib",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "npm run build"
   },
   "babel": {
     "presets": [
