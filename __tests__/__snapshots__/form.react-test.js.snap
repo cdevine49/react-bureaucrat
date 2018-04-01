@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Function children 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div>
+    <div
+      data-attempts={0}
+      id="div-1"
+    />
+    <div
+      data-attempts={0}
+      id="div-2"
+    />
+    <div
+      data-attempts={0}
+      id="div-3"
+    />
+  </div>
+</form>
+`;
+
+exports[`Props id and unspecified added to form element 1`] = `
+<form
+  className="tall and fat"
+  data-index={1}
+  id="my-form"
+  noValidate={true}
+  onSubmit={[Function]}
+/>
+`;
+
+exports[`React element children 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div
+    id="div-1"
+  />
+  <div
+    id="div-2"
+  />
+  <div
+    id="div-3"
+  />
+</form>
+`;
