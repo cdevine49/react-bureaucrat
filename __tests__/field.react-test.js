@@ -8,11 +8,7 @@ describe('Props', () => {
   test('Missing required', () => {
     const required = prop =>
     `Warning: Failed prop type: The prop \`${prop}\` is marked as required in \`Field\`, but its value is \`undefined\`.
-    in Field (created by Consumer)
-    in Consumer (created by Consumer)
-    in Consumer (created by Consumer)
-    in Consumer (created by Consumer)
-    in Consumer (created by ContextualField)
+    in Field
     in ContextualField`
     console.error = jest.fn();
     const tree = renderer.create(
@@ -28,11 +24,7 @@ describe('Props', () => {
   test('Wrong type', () => {
     const typeWarning = (prop, expected, given='array') =>
     `Warning: Failed prop type: Invalid prop \`${prop}\` of type \`${given}\` supplied to \`Field\`, expected \`${expected}\`.
-    in Field (created by Consumer)
-    in Consumer (created by Consumer)
-    in Consumer (created by Consumer)
-    in Consumer (created by Consumer)
-    in Consumer (created by ContextualField)
+    in Field
     in ContextualField`
     console.error = jest.fn();
     const tree = renderer.create(
