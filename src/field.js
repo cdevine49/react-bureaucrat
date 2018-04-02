@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import FormErrorListener from './formErrorListener';
-import { FormIdContext, OnChangeContext, onPropogatedFailedSubmitContext, ValueContext } from './form';
+import Context from './context';
 
 class Field extends Component {
 
@@ -74,29 +74,14 @@ class Field extends Component {
 }
 
 const ContextualField = (props) => (
-  <FormIdContext.Consumer>
-    {formId =>
-        <OnChangeContext.Consumer>
-          {onChange =>
-            <onPropogatedFailedSubmitContext.Consumer>
-              {onPropogatedFailedSubmit =>
-                <ValueContext.Consumer>
-                  {values =>
-                    <Field
-                      {...props}
-                      formId={formId}
-                      onChange={onChange}
-                      onPropogatedFailedSubmit={onPropogatedFailedSubmit}
-                      values={values}
-                      />
-                  }
-                </ValueContext.Consumer>
-              }
-            </onPropogatedFailedSubmitContext.Consumer>
-          }
-        </OnChangeContext.Consumer>
+  <Context.Consumer>
+    {values =>
+      <Field
+        {...props}
+        {...values}
+        />
     }
-  </FormIdContext.Consumer>
+  </Context.Consumer>
 );
 
 export default ContextualField;
