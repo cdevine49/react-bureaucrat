@@ -17,11 +17,19 @@ export default class Form extends Component {
     onPropogatedFailedSubmit: PropTypes.func
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { submissionAttempts: 0 }
+
     this._onChange = this._onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.providerValue = {
+      formId: props.id,
+      onChange: this._onChange,
+      onPropogatedFailedSubmit: props.onPropogatedFailedSubmit,
+      values: {}
+    }
   }
 
   _onChange(field, e) {
@@ -47,15 +55,12 @@ export default class Form extends Component {
 
   render() {
     const { alwaysSubmit, children, onFailedSubmit, onPropogatedFailedSubmit, onSubmit, ...props } = this.props;
-    const { submissionAttempts, ...state } = this.state;
-    const providerValue = {
-      formId: this.props.id,
-      onChange: this._onChange,
-      onPropogatedFailedSubmit,
-      values: state
+    const { submissionAttempts, ...values } = this.state;
+    if (Object.keys(values).some(key => this.providerValue.values[key] !== values[key])) {
+      this.providerValue = Object.assign({}, this.providerValue, { values });
     };
     return (
-      <Context.Provider value={providerValue}>
+      <Context.Provider value={this.providerValue}>
         <form onSubmit={ this.handleSubmit } { ...props}>
           {typeof children === "function" ?
             children(this.state.submissionAttempts)

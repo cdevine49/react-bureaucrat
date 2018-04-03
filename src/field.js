@@ -1,11 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import FormErrorListener from './formErrorListener';
 import Context from './context';
 
-class Field extends Component {
+class Field extends PureComponent {
 
   static defaultProps = {
+    value: '',
     errors: [],
     onFailedSubmit: () => {},
     onPropogatedFailedSubmit: () => {}
@@ -17,12 +18,11 @@ class Field extends Component {
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     onFailedSubmit: PropTypes.func,
-    onPropogatedFailedSubmit: PropTypes.func,
-    values: PropTypes.object.isRequired
+    onPropogatedFailedSubmit: PropTypes.func
   }
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.onChange = this.onChange.bind(this);
     this._handleSubmissionAttempt = this._handleSubmissionAttempt.bind(this);
   }
@@ -47,16 +47,13 @@ class Field extends Component {
   }
 
   _currentErrors() {
-    return this.props.errors.reduce((acc, error) => {
-      if (error._handle(this._value())) {
+    const { errors, value } = this.props;
+    return errors.reduce((acc, error) => {
+      if (error._handle(value)) {
         acc.push(error.message);
       }
       return acc;
     }, []);
-  }
-
-  _value() {
-    return this.props.values[this.props.name] || '';
   }
 
   onChange(e) {
@@ -67,7 +64,7 @@ class Field extends Component {
     const currentErrors = this._currentErrors();
     return (
       <Fragment>
-        {this.props.children({currentErrors, value: this._value(), onChange: this.onChange})}
+        {this.props.children({currentErrors, value: this.props.value, onChange: this.onChange})}
       </Fragment>
     );
   }
@@ -75,10 +72,13 @@ class Field extends Component {
 
 const ContextualField = (props) => (
   <Context.Consumer>
-    {values =>
+    {context =>
       <Field
         {...props}
-        {...values}
+        formId={context.formId}
+        onPropogatedFailedSubmit={context.onPropogatedFailedSubmit}
+        onChange={context.onChange}
+        value={context.values[props.name]}
         />
     }
   </Context.Consumer>
